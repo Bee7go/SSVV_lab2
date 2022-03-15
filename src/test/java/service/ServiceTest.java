@@ -37,13 +37,13 @@ class ServiceTest {
     }
 
     @org.junit.jupiter.api.Test
-    void addStudentSuccessfully() {
+    void testAddStudentSuccessfully() {
         Student student = new Student("123", "name1", 931, "name1@yahoo.com");
         assertEquals(null, service.addStudent(student));
     }
 
     @org.junit.jupiter.api.Test
-    void addStudentWithError() {
+    void testAddStudentWithError() {
         Student student = new Student("123", "name1", 931, "name1@yahoo.com");
         service.addStudent(student);
         assertEquals(student, service.addStudent(student));
