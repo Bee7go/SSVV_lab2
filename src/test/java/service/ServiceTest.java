@@ -4,12 +4,14 @@ import domain.Student;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.function.Executable;
 import repository.NotaXMLRepo;
 import repository.StudentXMLRepo;
 import repository.TemaXMLRepo;
 import validation.NotaValidator;
 import validation.StudentValidator;
 import validation.TemaValidator;
+import validation.ValidationException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -54,5 +56,16 @@ class ServiceTest {
         Student student = new Student("123", "name1", 931, "name1@yahoo.com");
         service.addStudent(student);
         assertEquals(student, service.addStudent(student));
+    }
+
+    @org.junit.jupiter.api.Test
+    void testAddStudentInvalidGroup1() {
+        Student student = new Student("123", "name1", -1, "name1@yahoo.com");
+        Exception exception = assertThrows(ValidationException.class, ()->{service.addStudent(student);});
+
+        String expectedMessage = "Grupa incorecta!";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 }
