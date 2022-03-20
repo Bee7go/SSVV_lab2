@@ -68,4 +68,37 @@ class ServiceTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
     }
+
+    @org.junit.jupiter.api.Test
+    void testAddStudentEmptyId() {
+        Student student = new Student("","",0,"");
+        Exception exception = assertThrows(ValidationException.class, ()->{service.addStudent(student);});
+
+        String expectedMessage = "Id incorect!";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @org.junit.jupiter.api.Test
+    void testAddStudentEmptyEmail() {
+        Student student = new Student("6","georgiana",0,"");
+        Exception exception = assertThrows(ValidationException.class, ()->{service.addStudent(student);});
+
+        String expectedMessage = "Email incorect!";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @org.junit.jupiter.api.Test
+    void testAddStudentEmptyName() {
+        Student student = new Student("6","",0,"random@yahoo.com");
+        Exception exception = assertThrows(ValidationException.class, ()->{service.addStudent(student);});
+
+        String expectedMessage = "Nume incorect!";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
 }
