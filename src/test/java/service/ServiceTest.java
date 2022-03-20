@@ -48,4 +48,11 @@ class ServiceTest {
         service.addStudent(student);
         assertEquals(student, service.addStudent(student));
     }
+
+    @org.junit.jupiter.api.Test
+    void testAddStudentThatAlreadyExists() {
+        Student student = new Student("123", "name1", 931, "name1@yahoo.com");
+        service.addStudent(student);
+        assertEquals(student, service.addStudent(student));
+    }
 }
