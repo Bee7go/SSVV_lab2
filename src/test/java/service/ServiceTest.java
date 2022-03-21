@@ -120,15 +120,24 @@ class ServiceTest {
     @org.junit.jupiter.api.Test
     void testAddStudentWithGroupMinInt() {
         Student student = new Student("123", "name1", Integer.MIN_VALUE, "name1@yahoo.com");
-        service.addStudent(student);
-        assertEquals(student, service.addStudent(student));
+        Exception exception = assertThrows(ValidationException.class, ()->{service.addStudent(student);});
+
+        String expectedMessage = "Grupa incorecta!";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+
     }
 
     @org.junit.jupiter.api.Test
     void testAddStudentWithGroupMaxIntPlus() {
         Student student = new Student("123", "name1", Integer.MAX_VALUE + 1, "name1@yahoo.com");
-        service.addStudent(student);
-        assertEquals(student, service.addStudent(student));
+        Exception exception = assertThrows(ValidationException.class, ()->{service.addStudent(student);});
+
+        String expectedMessage = "Grupa incorecta!";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 
     @org.junit.jupiter.api.Test
@@ -141,7 +150,7 @@ class ServiceTest {
     @org.junit.jupiter.api.Test
     void testAddStudentIdString() {
         Student student = new Student("abc", "name1", 931, "name1@yahoo.com");
-        assertEquals(null, service.addStudent(student));
+        assertEquals(student, service.addStudent(student));
     }
 
     @org.junit.jupiter.api.Test
