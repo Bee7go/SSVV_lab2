@@ -1,6 +1,7 @@
 package service;
 
 import domain.Student;
+import domain.Tema;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -147,5 +148,23 @@ class ServiceTest {
     void testAddStudentIdInt() {
         Student student = new Student("123", "name1", 931, "name1@yahoo.com");
         assertEquals(null, service.addStudent(student));
+    }
+
+    @org.junit.jupiter.api.Test
+    void testAddTemaWithInvalidId() {
+        Tema tema = new Tema("","description1",7,5);
+        Exception exception = assertThrows(ValidationException.class, ()->{service.addTema(tema);});
+        String expectedMessage = "Numar tema invalid!";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @org.junit.jupiter.api.Test
+    void testAddTemaWithInvalidDeadline() {
+        Tema tema = new Tema("1","description1",15,5);
+        Exception exception = assertThrows(ValidationException.class, ()->{service.addTema(tema);});
+        String expectedMessage = "Deadlineul trebuie sa fie intre 1-14.";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 }
