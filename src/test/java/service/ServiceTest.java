@@ -101,4 +101,51 @@ class ServiceTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
     }
+
+    @org.junit.jupiter.api.Test
+    void testAddStudentWithGroupZero() {
+        Student student = new Student("123", "name1", 0, "name1@yahoo.com");
+        service.addStudent(student);
+        assertEquals(student, service.addStudent(student));
+    }
+
+    @org.junit.jupiter.api.Test
+    void testAddStudentWithGroupMaxInt() {
+        Student student = new Student("123", "name1", Integer.MAX_VALUE, "name1@yahoo.com");
+        service.addStudent(student);
+        assertEquals(student, service.addStudent(student));
+    }
+
+    @org.junit.jupiter.api.Test
+    void testAddStudentWithGroupMinInt() {
+        Student student = new Student("123", "name1", Integer.MIN_VALUE, "name1@yahoo.com");
+        service.addStudent(student);
+        assertEquals(student, service.addStudent(student));
+    }
+
+    @org.junit.jupiter.api.Test
+    void testAddStudentWithGroupMaxIntPlus() {
+        Student student = new Student("123", "name1", Integer.MAX_VALUE + 1, "name1@yahoo.com");
+        service.addStudent(student);
+        assertEquals(student, service.addStudent(student));
+    }
+
+    @org.junit.jupiter.api.Test
+    void testAddStudentWithGroupMinIntMinus() {
+        Student student = new Student("123", "name1", Integer.MIN_VALUE - 1, "name1@yahoo.com");
+        service.addStudent(student);
+        assertEquals(student, service.addStudent(student));
+    }
+
+    @org.junit.jupiter.api.Test
+    void testAddStudentIdString() {
+        Student student = new Student("abc", "name1", 931, "name1@yahoo.com");
+        assertEquals(null, service.addStudent(student));
+    }
+
+    @org.junit.jupiter.api.Test
+    void testAddStudentIdInt() {
+        Student student = new Student("123", "name1", 931, "name1@yahoo.com");
+        assertEquals(null, service.addStudent(student));
+    }
 }
