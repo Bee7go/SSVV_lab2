@@ -3,9 +3,7 @@ package service;
 import domain.Student;
 import domain.Tema;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.function.Executable;
 import repository.NotaXMLRepo;
 import repository.StudentXMLRepo;
 import repository.TemaXMLRepo;
@@ -200,62 +198,74 @@ class ServiceTest {
         service.addTema(tema);
         assertEquals(tema, service.addTema(tema));
 
-
     }
 
     @org.junit.jupiter.api.Test
-    void testConditionsAddTema() {
+    void testInvalidIdAddTema() {
         Tema tema = new Tema("", "description1", 10, 5);
         Exception exception = assertThrows(ValidationException.class, () -> {
             service.addTema(tema);
         });
         assertTrue(exception.getMessage().contains("Numar tema invalid!"));
+    }
 
-        Tema tema2 = new Tema(null, "description1", 10, 5);
+    @org.junit.jupiter.api.Test
+    void testNullIdAddTema() {
+        Tema tema2 = new Tema(null, "description1", 10, 5); // Implica modificari in cod
         Exception exception2 = assertThrows(ValidationException.class, () -> {
             service.addTema(tema2);
         });
         assertTrue(exception2.getMessage().contains("Numar tema invalid!"));
+    }
 
-        Tema tema3 = new Tema("1", "", 10, 5); // Implica modificari in cod
+    @org.junit.jupiter.api.Test
+    void testInvalidDescriptionAddTema() {
+        Tema tema3 = new Tema("1", "", 10, 5);
         Exception exception3 = assertThrows(ValidationException.class, () -> {
             service.addTema(tema3);
         });
         assertTrue(exception3.getMessage().contains("Descriere invalida!"));
+    }
 
+    @org.junit.jupiter.api.Test
+    void testNegativeDeadlineAddTema() {
         Tema tema4 = new Tema("1", "description1", -1, 5);
         Exception exception4 = assertThrows(ValidationException.class, () -> {
             service.addTema(tema4);
         });
         assertTrue(exception4.getMessage().contains("Deadlineul trebuie sa fie intre 1-14."));
+    }
 
+    @org.junit.jupiter.api.Test
+    void testInvalidDeadlineAddTema() {
         Tema tema5 = new Tema("1", "description1", 15, 10);
         Exception exception5 = assertThrows(ValidationException.class, () -> {
             service.addTema(tema5);
         });
         assertTrue(exception5.getMessage().contains("Deadlineul trebuie sa fie intre 1-14."));
+    }
 
+    @org.junit.jupiter.api.Test
+    void testNegativePresentedWeekAddTema() {
         Tema tema6 = new Tema("1", "description1", 5, -1);
         Exception exception6 = assertThrows(ValidationException.class, () -> {
             service.addTema(tema6);
         });
         assertTrue(exception6.getMessage().contains("Saptamana primirii trebuie sa fie intre 1-14."));
+    }
 
+    @org.junit.jupiter.api.Test
+    void testInvalidPresentedWeekAddTema() {
         Tema tema7 = new Tema("1", "description1", 5, 15);
         Exception exception7 = assertThrows(ValidationException.class, () -> {
             service.addTema(tema7);
         });
         assertTrue(exception7.getMessage().contains("Saptamana primirii trebuie sa fie intre 1-14."));
-
     }
 
     @org.junit.jupiter.api.Test
-    void testPathsAddTemaO() {
-
-    }
-
-    @org.junit.jupiter.api.Test
-    void testLoopsAddTema() {
-
+    void testAlreadyExistingAddTema() {
+        Tema tema8 = new Tema("1", "description1", 10, 5);
+        assertEquals(tema8, service.addTema(tema8));
     }
 }
