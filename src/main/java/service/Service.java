@@ -165,7 +165,7 @@ public class Service {
         Tema tema = temaFileRepository.findOne(nota.getIdTema());
         int predare = calculeazaSPredare(nota.getData());
         if(predare != tema.getDeadline()){
-            if (predare-tema.getDeadline() == 1){ // For this to work we should have:if(tema.getDeadline()-predare >= 0)
+            if (tema.getDeadline()-predare >= 0){ // For this to work we should have:if(tema.getDeadline()-predare >= 0)
                 nota.setNota(nota.getNota()-2.5);
             }
             else{

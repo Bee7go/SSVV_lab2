@@ -1,5 +1,6 @@
 package service;
 
+import domain.Nota;
 import domain.Student;
 import domain.Tema;
 import org.junit.jupiter.api.AfterEach;
@@ -11,6 +12,8 @@ import validation.NotaValidator;
 import validation.StudentValidator;
 import validation.TemaValidator;
 import validation.ValidationException;
+
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -267,5 +270,30 @@ class ServiceTest {
     void testAlreadyExistingAddTema() {
         Tema tema8 = new Tema("1", "description1", 10, 5);
         assertEquals(tema8, service.addTema(tema8));
+    }
+
+    @org.junit.jupiter.api.Test
+    void addGrade() {
+        LocalDate dataPredare = LocalDate.of(Integer.parseInt("2018"), Integer.parseInt("10"), Integer.parseInt("7"));
+        Nota nota = new Nota("123", "1", "1", 8.5,  dataPredare);
+        Exception exception6 = assertThrows(ValidationException.class, () -> {
+            service.addNota(nota, "feedback1");
+        });
+        assertTrue(exception6.getMessage().contains("Studentul nu mai poate preda aceasta tema!"));
+    }
+
+    @org.junit.jupiter.api.Test
+    void testAddStudentAddGradeAddTema() {
+        Student student = new Student("12345", "name1", 931, "name1@yahoo.com");
+        assertEquals(null, service.addStudent(student));
+
+        Tema tema = new Tema("test12345", "description1", 3, 1);
+        service.addTema(tema);
+        assertEquals(tema, service.addTema(tema));
+
+        LocalDate dataPredare = LocalDate.of(Integer.parseInt("2018"), Integer.parseInt("10"), Integer.parseInt("12"));
+        Nota nota = new Nota("12345", "12345", "test12345", 8.5,  dataPredare);
+        assertEquals(6.0, service.addNota(nota,"feedback1"));
+        service.deleteStudent("12345");
     }
 }
