@@ -274,7 +274,7 @@ class ServiceTest {
 
     @org.junit.jupiter.api.Test
     void addGrade() {
-        LocalDate dataPredare = LocalDate.of(Integer.parseInt("2018"), Integer.parseInt("10"), Integer.parseInt("7"));
+        LocalDate dataPredare = LocalDate.of(Integer.parseInt("2019"), Integer.parseInt("10"), Integer.parseInt("7"));
         Nota nota = new Nota("123", "1", "1", 8.5,  dataPredare);
         Exception exception6 = assertThrows(ValidationException.class, () -> {
             service.addNota(nota, "feedback1");
