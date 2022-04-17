@@ -296,4 +296,36 @@ class ServiceTest {
         assertEquals(6.0, service.addNota(nota,"feedback1"));
         service.deleteStudent("12345");
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Big
+    @org.junit.jupiter.api.Test
+    void testAddStudent() {
+        Student student = new Student("123", "name1", 931, "name1@yahoo.com");
+        assertEquals(null, service.addStudent(student));
+    }
+
+    @org.junit.jupiter.api.Test
+    void testAddStudentAssignment() {
+        Student student = new Student("123", "name1", 931, "name1@yahoo.com");
+        assertEquals(null, service.addStudent(student));
+
+        Tema tema = new Tema("test12345", "description1", 3, 1);
+        service.addTema(tema);
+        assertEquals(tema, service.addTema(tema));
+    }
+
+    @org.junit.jupiter.api.Test
+    void testAddStudentAssignmentGrade() {
+        Student student = new Student("123", "name1", 931, "name1@yahoo.com");
+        assertEquals(null, service.addStudent(student));
+
+        Tema tema = new Tema("test12345", "description1", 3, 1);
+        service.addTema(tema);
+        assertEquals(tema, service.addTema(tema));
+
+        LocalDate dataPredare = LocalDate.of(Integer.parseInt("2018"), Integer.parseInt("10"), Integer.parseInt("12"));
+        Nota nota = new Nota("12345", "123", "test12345", 8.5,  dataPredare);
+        assertEquals(6.0, service.addNota(nota,"feedback1"));
+    }
 }
